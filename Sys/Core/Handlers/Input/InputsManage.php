@@ -1,8 +1,8 @@
 <?php
 
-namespace Sys\Core\Handler\Input;
+namespace Sys\Core\Handlers\Input;
 
-use Sys\Core\Handler\Input\InputsCheck;
+use Sys\Core\Handlers\Input\InputsCheck;
 
 class InputsManage {
     

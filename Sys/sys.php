@@ -30,13 +30,11 @@ require COREPATH.DS.'Router.php';
 
 function autloadBaseHandlers($className)
 {
-    $classPath = $className.'.php';
-    
+    $classPath = strtr($className.'.php', '/\\', DS.DS);
     if(file_exists($classPath))
     {
         include_once $classPath;
     }
-    vdx($className);
 }
 spl_autoload_register('autloadBaseHandlers');
 
@@ -44,7 +42,6 @@ require HANDLRPATH.DS.'Input'.DS.'InputsCheck.php';
 require HANDLRPATH.DS.'Input'.DS.'InputsManage.php';
 
 require CTRLSPATH.DS.'mainCtrl.php';
-
 
 
 use Sys\Application;
