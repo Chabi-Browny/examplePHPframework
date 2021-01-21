@@ -1,8 +1,8 @@
 <?php
 
-namespace Sys\Core\Handlers;
+namespace Examp\Core\Handlers;
 
-use Sys\Core\Handlers\Database;
+use Examp\Core\Handlers\Database;
 
 class Model{
     

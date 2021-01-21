@@ -1,6 +1,6 @@
 <?php
 
-namespace Sys\Core\Handlers;
+namespace Examp\Core\Handlers;
 
 class Files {
 

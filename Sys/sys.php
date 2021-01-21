@@ -1,7 +1,6 @@
 <?php
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-
 $http = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https://' : 'http://';
 $host = filter_input(INPUT_SERVER, 'HTTP_HOST');
 $pahti = pathinfo($_SERVER['PHP_SELF']);
@@ -13,7 +12,8 @@ define('APPPATH', BASEPATH.DS.'app');
 define('VIEWSPATH', APPPATH.DS.'views');
 define('CTRLSPATH', APPPATH.DS.'controllers');
 define('MDLSPATH', APPPATH.DS.'models');
-define('COREPATH', SYSPATH.DS.'Core');
+
+define('COREPATH', EXAMPPATH.DS.'Core');
 define('HANDLRPATH', COREPATH.DS.'Handlers');
 
 if(ENV == 'development' && file_exists(COREPATH.DS.'Helpers'.DS.'dev_helpr.php'))
@@ -23,14 +23,13 @@ if(ENV == 'development' && file_exists(COREPATH.DS.'Helpers'.DS.'dev_helpr.php')
 require_once COREPATH.DS.'Helpers'.DS.'basic_helpr.php';
 
 
-
-require SYSPATH.DS.'Application.php';
-
+require EXAMPPATH.DS.'Application.php';
 require COREPATH.DS.'Router.php';
 
 function autloadBaseHandlers($className)
 {
-    $classPath = strtr($className.'.php', '/\\', DS.DS);
+    $classPath = strtr(SYSPATH.DS.$className.'.php', '/\\', DS.DS);
+    vdx($classPath);
     if(file_exists($classPath))
     {
         include_once $classPath;
@@ -44,6 +43,6 @@ require HANDLRPATH.DS.'Input'.DS.'InputsManage.php';
 require CTRLSPATH.DS.'mainCtrl.php';
 
 
-use Sys\Application;
+use Examp\Application;
 
 (new Application());

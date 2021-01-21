@@ -1,7 +1,7 @@
 <?php
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-namespace Sys\Core\Handlers;
+namespace Examp\Core\Handlers;
 
 class Database extends \PDO {
     

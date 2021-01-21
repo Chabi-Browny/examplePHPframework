@@ -2,9 +2,9 @@
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
 use App\Ctrls\MainCtrl;
-use Sys\Core\Handlers\Model;
-use Sys\Core\Handlers\Input\InputsManage;
-use Sys\Core\Handlers\Session;
+use Examp\Core\Handlers\Model;
+use Examp\Core\Handlers\Input\InputsManage;
+use Examp\Core\Handlers\Session;
 
 class Login extends MainCtrl{
     

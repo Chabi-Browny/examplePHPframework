@@ -1,10 +1,10 @@
 <?php
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-namespace Sys;
+namespace Examp;
 
-use Sys\Core\Handlers\Session;
-use Sys\Core\Handlers\Controller;
+use Examp\Core\Handlers\Session;
+use Examp\Core\Handlers\Controller;
 
 class Application {
     

@@ -1,6 +1,6 @@
 <?php
 
-use Sys\Core\Handlers\Model;
+use Examp\Core\Handlers\Model;
 
 class LoginMdl extends Model{
     

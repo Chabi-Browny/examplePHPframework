@@ -1,6 +1,6 @@
 <?php
 
-namespace Sys\Core\Handlers\Input;
+namespace Examp\Core\Handlers\Input;
 
 class InputsCheck {
 

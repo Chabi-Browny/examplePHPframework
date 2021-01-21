@@ -3,8 +3,8 @@ defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
 namespace App\Ctrls;
 
-use Sys\Core\Handlers\Controller;
-use Sys\Core\Handlers\Session;
+use Examp\Core\Handlers\Controller;
+use Examp\Core\Handlers\Session;
 
 class MainCtrl extends Controller{
 

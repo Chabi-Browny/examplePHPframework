@@ -1,11 +1,11 @@
 <?php
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-namespace Sys\Core\Handlers;
+namespace Examp\Core\Handlers;
 
-use Sys\Core\Router;
-use Sys\Core\Handlers\Views;
-use Sys\Core\Handlers\Files;
+use Examp\Core\Router;
+use Examp\Core\Handlers\Views;
+use Examp\Core\Handlers\Files;
 
 class Controller {
     
