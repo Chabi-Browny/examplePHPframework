@@ -3,8 +3,8 @@ define('ISRUN', microtime());
 
 define('DS', DIRECTORY_SEPARATOR);
 define('BASEPATH', __DIR__);
-define('SYSPATH', BASEPATH.DS.'Sys');
-define('EXAMPPATH', BASEPATH.DS.'Sys'.DS.'Examp');
+define('SYSPATH', BASEPATH.DS.'system');
+define('EXAMPPATH', SYSPATH.DS.'Examp');
 
 //
 $environment = 

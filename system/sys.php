@@ -29,7 +29,7 @@ require COREPATH.DS.'Router.php';
 function autloadBaseHandlers($className)
 {
     $classPath = strtr(SYSPATH.DS.$className.'.php', '/\\', DS.DS);
-    vdx($classPath);
+//    vdx($classPath);
     if(file_exists($classPath))
     {
         include_once $classPath;
