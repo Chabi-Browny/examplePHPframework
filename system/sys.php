@@ -42,7 +42,6 @@ require HANDLRPATH.DS.'Input'.DS.'InputsManage.php';
 
 require CTRLSPATH.DS.'mainCtrl.php';
 
-
 use Examp\Application;
 
 (new Application());

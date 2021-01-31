@@ -3,7 +3,6 @@ defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
 namespace Examp\Core\Handlers;
 
-use Examp\Core\Router;
 use Examp\Core\Handlers\Views;
 use Examp\Core\Handlers\Files;
 
@@ -11,52 +10,27 @@ class Controller {
     
     protected $_Data=[];
     protected $_FormErrors=[];
-    protected $_needCtrl = '';
-
-    private $_uriMeth = 'index';
-    private $_defaultCtrl = 'home';
-//    private $_errorCtrl = 'error';
     
-    public function __construct() 
-    {
-        $routerObj = new Router();
-        if( $routerObj->deflector() !== FALSE )
-        {
-            if(!is_array($routerObj->deflector(1)))
-            {
-                //set the needed controller based on the URL
-                $this->_needCtrl = $routerObj->deflector(1);
-            }
-            
-            if(!is_array($routerObj->deflector(2)))
-            {
-                //set the needed method based on the URL
-                $this->_uriMeth = $routerObj->deflector(2);
-            }
-        }
-        else
-        {
-            //404
-            vdx('Nem található az oldal!');
-        }
-        
-    }
+    private $_defaultMeth = 'index';
+    private $_defaultCtrl = 'home';
+    
+    public function __construct() {}
     
     /**
      * @desc - get the scpecific Controller, or the default Controller
      * @return type
      */
-    public function getController()
+    public function getController($ctrlName, $methName)
     {
-        $ctrlClassName = !empty($this->_needCtrl) ? $this->_needCtrl : $this->_defaultCtrl;
+        $ctrlClassName = !empty($ctrlName) ? $ctrlName : $this->_defaultCtrl;
         
         $ctrlPath = (new Files())->searchFile($ctrlClassName, CTRLSPATH);
         
         if( isset($ctrlPath['path']) && file_exists($ctrlPath['path']) )
         {
             include_once $ctrlPath['path'];
-            $methodName = $this->_uriMeth;
-            
+            $methodName = !empty($methName) ? $methName : $this->_defaultMeth;
+
             $classObj = new $ctrlClassName();
             
             if(is_callable([$classObj, $methodName]))

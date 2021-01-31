@@ -13,7 +13,7 @@ class Router {
      * @param type $uriPart
      * @return boolean
      */
-    public function deflector($uriPart=FALSE)
+    public function deflector( $uriPart = FALSE )
     {
         $uriStr = $this->_getUri();
         if( $uriStr !== FALSE)
@@ -30,9 +30,8 @@ class Router {
                 //return Array
                 return $expUri;
             }
-            
         }
-        return FALSE;
+        return FALSE;//////////////e helyére kell majd egy 404re irányitó
     }
     
     /**
@@ -41,8 +40,10 @@ class Router {
      */
     private function _getUri()
     {
-        //$uri = urldecode( parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) );???
+//        $uri = urldecode( parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ); ////////////lehet jó de majd később
+        
         $uriStr = isset($_REQUEST['uri']) ? trim(strip_tags($_REQUEST['uri']) ) : '';
+        
         $uriPattern = '/^[A-z0-9\_\-\+%.&#?\=\/][^;\ \<\>\(\´\)\'\"]{0,}$/';
         if(preg_match($uriPattern, $uriStr) || empty($uriStr))
         {

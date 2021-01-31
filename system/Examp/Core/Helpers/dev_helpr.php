@@ -25,17 +25,17 @@ if(!function_exists('dd'))
     }
 }
 
-if(!function_exists('getExistedFile'))
-{
-    function getExistedFile($filePath)
-    {
-        if(file_exists($filePath))
-        {
-            return include_once $filePath;
-        }
-        else
-        {
-            return FALSE;
-        }
-    }
-}
+//if(!function_exists('getExistedFile'))
+//{
+//    function getExistedFile($filePath)
+//    {
+//        if(file_exists($filePath))
+//        {
+//            return include_once $filePath;
+//        }
+//        else
+//        {
+//            return FALSE;
+//        }
+//    }
+//}
