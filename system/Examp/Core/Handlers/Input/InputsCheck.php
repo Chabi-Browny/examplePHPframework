@@ -1,12 +1,8 @@
 <?php
 
-namespace Examp\Core\Handlers\Input;
+namespace Core\Handlers\Input;
 
 class InputsCheck {
-
-    public function __construct() {
-        
-    }
     
     /**
      * @desc - check the $inData is empty
@@ -15,7 +11,7 @@ class InputsCheck {
      */
     public function isEmpty($inData)
     {
-        if( empty($inData))
+        if ( empty($inData))
             { return FALSE; }
         else //nem üres - tehát jó
             { return TRUE; }
@@ -27,9 +23,9 @@ class InputsCheck {
      * @param type $maxLength
      * @return boolean
      */
-    public function maxLength( $inData, $maxLength)
+    public function maxLength( string $inData, $maxLength)
     {
-        if( mb_strlen($inData, 'utf8') < $maxLength)
+        if ( mb_strlen($inData, 'utf8') < $maxLength)
             { return TRUE; }
         else
             { return FALSE; }
@@ -41,15 +37,14 @@ class InputsCheck {
      * @param type $minLength
      * @return boolean
      */
-    public function minLength( $inData, $minLength)
+    public function minLength( string $inData, $minLength)
     {
-        if( mb_strlen($inData, 'utf8') > $minLength)
+        if ( mb_strlen($inData, 'utf8') > $minLength)
             { return TRUE; }
         else
             { return FALSE; }
     }
-    
-    
+        
     /**
      * @desc - check the $inData is a valid email string
      * @param type $inData
@@ -57,7 +52,7 @@ class InputsCheck {
      */
     public function email( string $inData)
     {
-        if( filter_var($inData, FILTER_VALIDATE_EMAIL))
+        if ( filter_var($inData, FILTER_VALIDATE_EMAIL))
         {
             return TRUE;
         }

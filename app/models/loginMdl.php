@@ -22,6 +22,7 @@ class LoginMdl extends Model{
     public function getUserInfos($uName, $uPass)
     {
         $sqlStr = 'SELECT id,u_name,u_email FROM users WHERE u_email=? AND u_pass=?';
+        //hiányzik a bind-olás
         $stm = $this->dbObj->prepare($sqlStr);
         $stm->execute([$uName, $uPass]);
         if( $stm->rowCount() == 1 )

@@ -1,13 +1,9 @@
 <?php
 
-namespace Examp\Core\Handlers;
+namespace Core\Handlers;
 
 class Files {
 
-    public function __construct() {
-//        vdx('this is the file');
-    }
-    
     /**
      * @desc - search for the target file, and give back the file name
      * @param type $getFile
@@ -16,11 +12,11 @@ class Files {
      * @param type $basePath
      * @return boolean|string
      */
-    public function searchFile($getFile, $filePath,  $resultArr=[])
+    public function searchFile($getFile, $filePath,  $resultArr = [] )
     {
         //minden esetben megnézzük hogy hol vagyunk, ez visszad egy tömböt
-        $examinedPathArr = array_diff( scandir($filePath), ['.','..']);
-        
+        $examinedPathArr = array_diff( scandir($filePath), ['.','..']);      
+
         $fileName = '';
         foreach($examinedPathArr as $subject)
         {
@@ -28,7 +24,7 @@ class Files {
             //vdx($subject);
             
             //összefűzi $filePath(bejövő paraméterből) és a vizsgált $subject, ami fájl VAGY könyvtár
-            $path = $filePath.DS.$subject;
+            $path = $filePath.DIRECTORY_SEPARATOR.$subject;
             
             //az útvonal könyvtárra mutat?
             if( is_dir($path) )
@@ -41,9 +37,9 @@ class Files {
                 
                 if( isset($file[1]) && $getFile == $file[0] ) // 
                 {
-                     $resultArr['path'] = $path;
-                     $resultArr['name'] = $file[0].'.'.$file[1];
-                     return $resultArr;
+                    $resultArr['path'] = $path;
+                    $resultArr['name'] = $file[0].'.'.$file[1];
+                    return $resultArr;
                 }
             }
             if(!empty($fileName))
