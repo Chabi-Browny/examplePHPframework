@@ -9,6 +9,8 @@ use Core\Request\Request;
  */
 class Dispatcher {
     
+    const METHOD_DIVIDER = ':::';
+    
     private $routes = [];
     private $notFoundController;
     private $services;
@@ -45,7 +47,7 @@ class Dispatcher {
     
     private function invokeHandler(string $called, $matchedParams = FALSE)
     {        
-        $splittedCall = explode('::', $called);
+        $splittedCall = explode(self::METHOD_DIVIDER, $called);
         $controllerNameAlias = $splittedCall[0];
         $methodName = $splittedCall[1] ?? NULL;
         

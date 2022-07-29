@@ -22,3 +22,18 @@ body
     display: table;
     margin:0 auto;
 }
+
+.msg-wrapper
+{
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.msg-wrapper .msg-warn
+{
+    color: #ff9900;
+}
+.msg-wrapper .msg-error
+{
+    color: #f00;
+}

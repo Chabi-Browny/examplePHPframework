@@ -4,6 +4,7 @@ namespace Core\Middleware;
 
 use Core\Request\Request;
 use Core\Response\Response;
+use Core\Session\Session;
 
 /**
  * Description of AuthenticationMiddleware
@@ -19,7 +20,12 @@ class AuthenticationMiddleware implements \Contracts\Middleware{
     
     public function process(Request $request, Response $response, callable $next) 
     {
-        if( in_array($request->getUri(), $this->protectedLinks) && !$this->isLogged() )
+        $checkUri = array_filter($this->protectedLinks, function($uri) use ($request)
+        {
+            return preg_match('%/'.$uri.'%', $request->getUri());
+        });
+        
+        if( !empty($checkUri) && !$this->isLogged( $request->getSession() ) )
         {
             return $response->redirect('/');
         }
@@ -27,9 +33,9 @@ class AuthenticationMiddleware implements \Contracts\Middleware{
         return $next($request, $response);
     }
 
-    public function isLogged()
+    public function isLogged(Session $session)
     {
-        return TRUE;
+        return $session->has('logged');
     }
     
 }

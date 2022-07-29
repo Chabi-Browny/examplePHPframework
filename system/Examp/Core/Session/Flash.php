@@ -2,73 +2,81 @@
 
 namespace Core\Session;
 
+use Contracts\Session;
+use Core\Session\Session as BuiltInSession;
 /**
  * Description of Flash
  */
-class Flash implements \Contracts\Session
+class Flash implements Session
 {
     const FLASHSTORAGE = 'flashes';
-    
-    public function has(string $key) 
+
+    /**
+     * @var Session
+     */
+    protected $session;
+
+    public function __construct(BuiltInSession $session)
     {
-        $this->checkOrMakeFlashStorage();
-        
-        if ( array_key_exists($key, $_SESSION[self::FLASHSTORAGE]) )
-        {
-            return TRUE;
-        }
-        else
-        {
-            return FALSE;
-        }
-    }
-    
-    public function add(string $key, $value) 
-    {
-        $this->checkOrMakeFlashStorage();
-        if ( !array_key_exists($key, $_SESSION[self::FLASHSTORAGE]) )
-        {
-            $_SESSION[self::FLASHSTORAGE][$key] = $value;
-        }
-        
+        $this->session = $session;
     }
 
-    public function get(string $key) 
+    public function has(string $key)
     {
-        if ( array_key_exists($key, $_SESSION[self::FLASHSTORAGE]) )
+        if (!$this->checkFlashStorage()) {
+            $this->session->add(self::FLASHSTORAGE, []);
+        }
+        return array_key_exists($key, $this->getFlashStorage() );
+    }
+
+    public function add(string $key, $value)
+    {
+        if ( !$this->has($key) )
         {
-            return $_SESSION[self::FLASHSTORAGE][$key];
+            $flash = $this->session->get(self::FLASHSTORAGE);
+            $flash[$key] = $value;
+            $this->session->add(self::FLASHSTORAGE, $flash);
+        }
+
+    }
+
+    public function get(string $key)
+    {
+        if ( $this->has($key) )
+        {
+            $flash = $this->session->get(self::FLASHSTORAGE);
+            return $flash[$key];
         }
     }
 
     public function getAll()
     {
-        if ( $this->checkOrMakeFlashStorage() === TRUE )
+        if ( $this->session->has(self::FLASHSTORAGE) )
         {
-            return $_SESSION[self::FLASHSTORAGE];
+            return $this->session->get(self::FLASHSTORAGE);
         }
     }
-    
-    public function remove(string $key) 
+
+    public function remove(string $key)
     {
-        unset($_SESSION[self::FLASHSTORAGE][$key]);
+        $flash = $this->session->get(self::FLASHSTORAGE);
+        unset($flash[$key]);
     }
-    
+
     public function clearAll()
     {
-        unset($_SESSION[self::FLASHSTORAGE]);
+        $this->session->remove(self::FLASHSTORAGE);
+        $this->session->add(self::FLASHSTORAGE, []);
     }
-    
-    protected function checkOrMakeFlashStorage(): ?bool
+
+    protected function checkFlashStorage()
     {
-        if ( !array_key_exists(self::FLASHSTORAGE, $_SESSION) )
-        {
-            $_SESSION[self::FLASHSTORAGE] = [];
-        }
-        else
-        {
-            return TRUE;
-        }
+        return $this->session->has(self::FLASHSTORAGE);
+    }
+
+    protected function getFlashStorage()
+    {
+        return $this->session->get(self::FLASHSTORAGE);
     }
 
 }

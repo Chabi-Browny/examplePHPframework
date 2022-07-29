@@ -2,13 +2,16 @@
 
 namespace Core\Handlers\Input;
 
-use Core\Handlers\Input\InputsCheck;
+use Core\Handlers\Input\InputsFiler;
+use Core\Handlers\Input\InputCleaner;
 use Core\Request\Request;
 
 class InputsManager {
     
     const POST = "post";
     const GET = "get";
+    const FILTER_OPTION_DIVIDER = ":";
+    const FILTERS_DIVIDER = "|";
     
     private $filters = [];
     private $posts;
@@ -18,56 +21,34 @@ class InputsManager {
     public function __construct( Request $request ) 
     {
         $this->request = $request;
-        $this->setRequestParams();
     }
     
     public function getPost(string $indexName = NULL)
     {
-        if (array_key_exists($indexName, $this->posts) && $indexName !== NULL)
-        {
-            return $this->posts[$indexName];
-        }
-        else if (empty($indexName))
-        {
-            return $this->posts;
-        }
-        else
-        {
-            throw new Exception("There is no such key like: ".$indexName);
-        }
+        $postRequests = $this->request->getReqestedParams()[self::POST];
+        return $this->getRequestParams($postRequests, $indexName);
     }
     
     public function getGet(string $indexName = NULL)
     {
-        if (array_key_exists($indexName, $this->gets) && $indexName !== NULL)
-        {
-            return $this->gets[$indexName];
-        }
-        else if (empty($indexName))
-        {
-            return $this->gets;
-        }
-        else
-        {
-            throw new Exception("There is no such key like: ".$indexName);
-        }
+        $getRequests = $this->request->getReqestedParams()[self::GET];
+        return $this->getRequestParams($getRequests, $indexName);
     }
     
     /**
      * @desc - check the POST data with the specific InputCheck method
      * @param type $inputName
      * @param type $filters
-     * @param type $checkMethOpt
      * @return boolean|$this
      */
-    public function setFilter(string $inputName, string $filters, $checkMethOpt='')
+    public function setFilter(string $inputName, string $filters)
     {
         if ( $filters === '')
         {
             throw new Exception("No filter set!");
         }
         
-        $this->filters[$inputName] = explode('|', $filters);
+        $this->filters[$inputName] = explode(self::FILTERS_DIVIDER, $filters);
         return $this;
     }
     
@@ -78,7 +59,7 @@ class InputsManager {
     public function scan()
     {
         $filterError = [];
-        $inputCheck = new InputsCheck();
+        $inputCheck = new InputsFiler();
         
         foreach($this->filters as $inputName => $filterArr)
         {
@@ -86,7 +67,7 @@ class InputsManager {
             {
                 foreach($filterArr as $filter)
                 {
-                    $filterExp = explode(':', $filter);
+                    $filterExp = explode(self::FILTER_OPTION_DIVIDER, $filter);
                     $filterName = $filterExp[0];
                     $filterOpt = !empty($filterExp[1]) ? $filterExp[1] : '';
                     
@@ -108,15 +89,26 @@ class InputsManager {
     }
     
     /**
-     * @desc - set to he specific error the specific error message
+     * @desc - set to the specific error the specific error message
      */
     public function setFormErrors(){}
     
     /**/
-    private function setRequestParams()
-    {
-        $this->posts = $this->request->getReqestedParams()[self::POST];
-        $this->gets = $this->request->getReqestedParams()[self::GET];
+    private function getRequestParams($requestParamStore, $indexName)
+    { 
+        $inputCleaner = new InputCleaner();
+        if (array_key_exists($indexName, $requestParamStore) && $indexName !== NULL)
+        {
+            return $inputCleaner->cleanOne( $requestParamStore[$indexName]);
+        }
+        else if ($indexName === NULL)
+        {
+            return $inputCleaner->cleanAll($requestParamStore);
+        }
+        else
+        {
+            throw new Exception("There is no such key like: ".$indexName);
+        }
     }
     
 }

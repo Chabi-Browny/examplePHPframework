@@ -19,13 +19,15 @@ class MiddlewarePipeline {
     
     public function pipeline( Request $request, Response $response)
     {       
+        $response->setBaseUrl($request->getBaseUrl());
+        
         return $this->__invoke($request, $response);
     }
     
     public function __invoke( Request $request, Response $response ) 
     {
         $pipes = array_shift($this->pipes);
-        if($pipes == NULL)
+        if($pipes === NULL)
         {
             return $response;
         }

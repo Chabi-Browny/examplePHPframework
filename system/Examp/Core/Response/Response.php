@@ -7,11 +7,12 @@ namespace Core\Response;
  */
 class Response {
     
-    private $header;
-    private $body;
-    private $statusCode;
-    private $reasonPhrase;
-    private $protocol;
+    protected $header;
+    protected $body;
+    protected $statusCode;
+    protected $reasonPhrase;
+    protected $protocol;
+    protected $baseUrl;
     
     public function __construct( array $header, string $body, int $statusCode, string $reasonPhrase)
     {
@@ -52,13 +53,22 @@ class Response {
         return $this->reasonPhrase;
     }
     
+    public function setBaseUrl(string $baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+    }
+    
     public function redirect(string $target)
     {
+        if ( $target === '/' )
+        {
+            $target = '';
+        }
         //target ellenőrzés
         return new self(
-                [ 'Location' => /*baseurl*/$target ],
-                '',
-                302, 'Found'
+            [ 'Location' => $this->baseUrl.'/'.$target ],
+            '',
+            302, 'Found'
         );
     }
     

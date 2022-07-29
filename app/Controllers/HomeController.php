@@ -9,14 +9,16 @@ class HomeController extends \Core\Controller{
     
     public function index()
     {
-        $this->setView('public', ['title'=>'Főoldal']);
-        return $this;
+        return $this->setView('public', ['title'=>'Főoldal']);        
     }
     
+    /**
+     * @desc - just for test
+     * @return $this
+     */
     public function teszt()
     {
-        $this->setRedirect('/');
-        return $this;
+        return $this->setRedirect('/');        
     }
     
 }

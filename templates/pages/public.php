@@ -1,9 +1,7 @@
 
 <?php 
 $this->setLayout('layout');
-?>
 
-<?php 
 $this->startBlock('content');
 ?>
 

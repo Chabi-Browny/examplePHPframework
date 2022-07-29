@@ -1,15 +1,14 @@
 <?php
-
 namespace Core\Handlers\Input;
 
-class InputsCheck {
+class InputsFiler {
     
     /**
      * @desc - check the $inData is empty
      * @param type $inData
      * @return boolean
      */
-    public function isEmpty($inData)
+    public function require($inData)
     {
         if ( empty($inData))
             { return FALSE; }
@@ -23,12 +22,9 @@ class InputsCheck {
      * @param type $maxLength
      * @return boolean
      */
-    public function maxLength( string $inData, $maxLength)
+    public function maxLength( string $inData, $maxLength )
     {
-        if ( mb_strlen($inData, 'utf8') < $maxLength)
-            { return TRUE; }
-        else
-            { return FALSE; }
+        return mb_strlen($inData, 'utf8') < $maxLength;
     }
     
     /**
@@ -37,12 +33,9 @@ class InputsCheck {
      * @param type $minLength
      * @return boolean
      */
-    public function minLength( string $inData, $minLength)
+    public function minLength( string $inData, $minLength )
     {
-        if ( mb_strlen($inData, 'utf8') > $minLength)
-            { return TRUE; }
-        else
-            { return FALSE; }
+        return mb_strlen($inData, 'utf8') > $minLength;
     }
         
     /**
@@ -52,7 +45,7 @@ class InputsCheck {
      */
     public function email( string $inData)
     {
-        if ( filter_var($inData, FILTER_VALIDATE_EMAIL))
+        if ( filter_var($inData, FILTER_VALIDATE_EMAIL) )
         {
             return TRUE;
         }

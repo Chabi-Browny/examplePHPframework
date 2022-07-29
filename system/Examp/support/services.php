@@ -5,9 +5,10 @@ use Core\Containers\ServiceContainer;
 use Core\Database;
 use Core\Dispatcher;
 use Core\Handlers\Input\InputsManager;
+use Core\MiddlewarePipeline;
 use Core\Request\RequestFactory;
 use Core\Response\ResponseEmitter;
-use Core\Response\ResponeFactory;
+use Core\Response\ResponseFactory;
 use Core\Session\Session;
 use Core\View\ViewRenderer;
 use Core\Url;
@@ -28,9 +29,9 @@ return [
         $config = $container->get('config');
         return new ViewRenderer( $config->get('basePath') );
     },
-    ResponeFactory::class => function( ServiceContainer $container )
+    ResponseFactory::class => function( ServiceContainer $container )
     {
-        return new ResponeFactory($container->get(ViewRenderer::class));
+        return new ResponseFactory($container->get(ViewRenderer::class));
     },
     RequestFactory::class => function( ServiceContainer $container )
     {
@@ -43,19 +44,22 @@ return [
         
         $dispatcher->addRoute('/', 'homeCtrl');
         $dispatcher->addRoute('/login', 'loginFormCtrl');
-        $dispatcher->addRoute('/login/trylogin', 'loginSubmitCtrl::submit', 'post');
+        $dispatcher->addRoute('/login/trylogin', 'loginSubmitCtrl:::submit', 'post');
+        $dispatcher->addRoute('/logout', 'loginSubmitCtrl:::logout');
         $dispatcher->addRoute('/protected', 'mermberCtrl');
         
         return $dispatcher;
     },
-    Core\MiddlewarePipeline::class => function( ServiceContainer $container )
+    MiddlewarePipeline::class => function( ServiceContainer $container )
     {
-        $authenticationPipe = new Core\Middleware\AuthenticationMiddleware(['member']);
-        $dispatcherPipe = new Core\Middleware\DispatcherMiddleware( $container->get(Dispatcher::class), $container->get(ResponeFactory::class) );
+        $authenticationPipe = new Core\Middleware\AuthenticationMiddleware( ['protected'] );
+        $cleanupFlashPipe = new Core\Middleware\CleanupFlashMiddleware( );
+        $dispatcherPipe = new Core\Middleware\DispatcherMiddleware( $container->get(Dispatcher::class), $container->get(ResponseFactory::class) );
         
-        $pipeline = new Core\MiddlewarePipeline();
+        $pipeline = new MiddlewarePipeline();
         
         $pipeline->addPipe($authenticationPipe);
+        $pipeline->addPipe($cleanupFlashPipe);
         $pipeline->addPipe($dispatcherPipe);
         
         return $pipeline;
@@ -68,13 +72,16 @@ return [
             
     LoginSubmitService::class => function( ServiceContainer $container )
     {
-        return new LoginSubmitService( $container->get(Database::class) );
+        return new LoginSubmitService( $container->get(Database::class), $container->get(Session::class) );
     },
             
     'notFoundCtrl' => new App\Controllers\NotFoundController(),
     'homeCtrl' => new App\Controllers\HomeController(),
     'mermberCtrl' => new App\Controllers\MermberController(),
-    'loginFormCtrl' => new App\Controllers\LoginFormController(),
+    'loginFormCtrl' => function(ServiceContainer $container)
+    {
+        return new App\Controllers\LoginFormController( $container->get(Session::class) );  
+    },
     'loginSubmitCtrl' => function( ServiceContainer $container )
     {
         return new \App\Controllers\LoginSubmitController( $container );

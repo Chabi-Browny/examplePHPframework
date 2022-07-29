@@ -2,6 +2,8 @@
 
 namespace Core\Session;
 
+use Core\Session\Flash;
+
 class Session implements \Contracts\Session{
                    
     public function has(string $key)
@@ -15,6 +17,7 @@ class Session implements \Contracts\Session{
         {
             return $_SESSION[$key];
         }
+        return [];
     }
 
     public function getAll() 
@@ -24,10 +27,7 @@ class Session implements \Contracts\Session{
     
     public function add(string $key, $value) 
     {
-        if(!$this->has($key))
-        {
-            $_SESSION[$key] = $value;
-        }
+        $_SESSION[$key] = $value;
     }
     
     public function remove(string $key) 
@@ -38,6 +38,11 @@ class Session implements \Contracts\Session{
     public function clearAll() 
     {
         session_destroy();
+    }
+    
+    public function flash()
+    {
+        return new Flash($this);
     }
     
 }

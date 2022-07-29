@@ -17,7 +17,7 @@ class Request {
     private $cookie;
     private $reqestedParams;
     
-    public function __construct( Url $uri, string $method, array $header, $body,  $session, $cookie, array $reqestedParams)
+    public function __construct( Url $uri, string $method, array $header, $body, Session $session, $cookie, array $reqestedParams)
     {
         $this->uri = $uri;
         $this->method = $method;
@@ -53,7 +53,7 @@ class Request {
         return $this->body;
     }
 
-    public function getSession() 
+    public function getSession(): Session
     {
         return $this->session;
     }
