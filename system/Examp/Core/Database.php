@@ -11,7 +11,7 @@ class Database extends \PDO {
     private $_dbUser;
     private $_dbPass;
 
-    public function __construct( Containers\Config $config)
+    public function __construct( Containers\ConfigContainer $config)
     {
         $this->_dbType = $config->get('dbDriver');
         $this->_dbHost = $config->get('dbHost');

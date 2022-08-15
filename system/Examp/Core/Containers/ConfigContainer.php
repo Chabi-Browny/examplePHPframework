@@ -5,7 +5,7 @@ namespace Core\Containers;
 /**
  * Description of Config
  */
-class Config implements \Contracts\Containers{
+class ConfigContainer implements \Contracts\Containers{
 
     private $configs = [];    
     

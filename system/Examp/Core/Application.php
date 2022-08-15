@@ -4,7 +4,7 @@ defined('ISRUN') OR exit('Direct access to the script not allowed!');
 namespace Core;
 
 use Core\Containers\ServiceContainer;
-use Core\Containers\Config;
+use Core\Containers\ConfigContainer;
 use Core\Request\RequestFactory;
 
 class Application {
@@ -22,7 +22,7 @@ class Application {
         return self::$instance;
     }
     
-    public function run( Config $config ,ServiceContainer $serviceContainer)
+    public function run( ConfigContainer $config ,ServiceContainer $serviceContainer)
     {
         try
         {
