@@ -1,7 +1,7 @@
 <?php
+use Core\Containers\ConfigContainer;
 
-
-$config = new Core\Containers\ConfigContainer();
+$config = new ConfigContainer();
 
 $config->add('basePath', BASEPATH);
 
