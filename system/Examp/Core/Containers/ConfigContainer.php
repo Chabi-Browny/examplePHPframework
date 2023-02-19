@@ -1,11 +1,14 @@
 <?php
 
-namespace Core\Containers;
+namespace Examp\Core\Containers;
+
+use Examp\Contracts\Containers;
+use Exception;
 
 /**
  * Description of Config
  */
-class ConfigContainer implements \Contracts\Containers{
+class ConfigContainer implements Containers{
 
     private $configs = [];    
     
@@ -18,7 +21,7 @@ class ConfigContainer implements \Contracts\Containers{
     {
         if($this->has($key))
         {
-            throw new \Exception('The config under this key ('.$key.') is already exists!');
+            throw new Exception('The config under this key ('.$key.') is already exists!');
         }
         
         $this->configs[$key] = $value;
@@ -32,7 +35,7 @@ class ConfigContainer implements \Contracts\Containers{
         }
         else
         {
-            throw new \Exception('There is no config under this key: '.$key.'!');
+            throw new Exception('There is no config under this key: '.$key.'!');
         }
     }
     

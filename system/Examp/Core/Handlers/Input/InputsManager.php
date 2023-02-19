@@ -1,10 +1,11 @@
 <?php
 
-namespace Core\Handlers\Input;
+namespace Examp\Core\Handlers\Input;
 
-use Core\Handlers\Input\InputsFiler;
-use Core\Handlers\Input\InputCleaner;
-use Core\Request\Request;
+use Examp\Core\Handlers\Input\InputsFiler;
+use Examp\Core\Handlers\Input\InputCleaner;
+use Examp\Core\Request\Request;
+use Exception;
 
 class InputsManager {
     

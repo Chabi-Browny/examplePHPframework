@@ -2,15 +2,15 @@
 
 namespace App\Controllers;
 
+use Examp\Core\Controller;
 /**
  * Description of MermberController
  */
-class MermberController extends \Core\Controller{
-
+class MermberController extends Controller
+{
     public function index()
     {
-        $this->setView('protected', ['title'=>'Tagoknak']);
-        return $this;
+        return $this->setView('protected', ['title'=>'Tagoknak']);
     }
 }
 

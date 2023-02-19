@@ -1,5 +1,5 @@
 <?php
-namespace Core\Handlers\Input;
+namespace Examp\Core\Handlers\Input;
 
 class InputsFiler {
     

@@ -1,9 +1,9 @@
 <?php
 namespace App\Controllers;
 
-use Core\Controller;
-use Core\Containers\ServiceContainer;
-use Core\Handlers\Input\InputsManager;
+use Examp\Core\Controller;
+use Examp\Core\Containers\ServiceContainer;
+use Examp\Core\Handlers\Input\InputsManager;
 
 use App\Services\LoginSubmitService;
 /**

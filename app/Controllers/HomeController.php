@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
+use Examp\Core\Controller;
+
 /**
  * Description of HomeController
  */
-class HomeController extends \Core\Controller{
-    
+class HomeController extends Controller
+{    
     public function index()
     {
         return $this->setView('public', ['title'=>'Főoldal']);        

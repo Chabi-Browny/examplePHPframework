@@ -1,10 +1,11 @@
 <?php
+
+namespace Examp\Core;
+
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-namespace Core;
-
-use Core\View\ModelAndView;
-use Core\UI\FormResponseFormater;
+use Examp\Core\View\View;
+use Examp\Core\UI\FormResponseFormater;
 
 class Controller {
 
@@ -14,10 +15,10 @@ class Controller {
 
     public function __construct()
     {
-        $this->modelAndView = new ModelAndView();
+        $this->modelAndView = new View();
     }
 
-    public function setView(string $viewName, array $viewData = [])
+    public function setView(string $viewName, array $viewData = []): self
     {
         $this->modelAndView->setViewName($viewName);
         $this->modelAndView->setViewData($viewData);
@@ -41,12 +42,12 @@ class Controller {
         $this->flashData[$flashkey] = $msgFormater->getFormattedMessage();
     }
 
-    public function getFlashData()
+    public function getFlashData(): array
     {
         return $this->flashData;
     }
 
-    public function getModelAndView() : ModelAndView
+    public function getView() : View
     {
         return $this->modelAndView;
     }

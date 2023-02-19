@@ -1,12 +1,12 @@
 <?php
 
-namespace Core\Response;
+namespace Examp\Core\Response;
 
 /**
  * Description of Response
  */
-class Response {
-    
+class Response
+{    
     protected $header;
     protected $body;
     protected $statusCode;

@@ -1,17 +1,20 @@
 <?php
 
-namespace Core\Response;
+namespace Examp\Core\Response;
+
+use Exception;
 
 /**
  * Description of ResponseEmitter
  */
-class ResponseEmitter {
-    
+class ResponseEmitter
+{    
+    /**/
     public function emit(Response $response)
     {
         if( headers_sent() )
         {
-            throw new \Exception("The header is already sent!");
+            throw new Exception("The header is already sent!");
         }
         
         $this->setStatusLine( $response->getProtocol(), $response->getStatusCode(), $response->getReasonPhrase());
@@ -21,13 +24,13 @@ class ResponseEmitter {
         $this->emitBody( $response->getBody() );
     }
     
-    private function setStatusLine($protocol, $statusCode, $reasonPhrase)
+    protected function setStatusLine($protocol, $statusCode, $reasonPhrase)
     {
         $status = sprintf('%s %d %s', $protocol, $statusCode, $reasonPhrase);
         header($status, TRUE, $statusCode);
     }
     
-    private function setHeader(array $headers)
+    protected function setHeader(array $headers)
     {
         foreach($headers as $name => $value)
         {
@@ -35,7 +38,7 @@ class ResponseEmitter {
         }
     }
     
-    private function emitBody(string $bodyContent)
+    protected function emitBody(string $bodyContent)
     {
         echo $bodyContent;
     }

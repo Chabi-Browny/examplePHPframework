@@ -1,17 +1,17 @@
 <?php
 
-namespace Core\Middleware;
+namespace Examp\Core\Middleware;
 
-use Contracts\Middleware;
+use Examp\Contracts\Middleware;
 
-use Core\MiddlewarePipeline;
-use Core\Request\Request;
-use Core\Response\Response;
+use Examp\Core\MiddlewarePipeline;
+use Examp\Core\Request\Request;
+use Examp\Core\Response\Response;
 /**
  * Description of FlashMessageCleanupMiddleware
  */
-class CleanupFlashMiddleware extends MiddlewarePipeline implements Middleware{
-
+class CleanupFlashMiddleware extends MiddlewarePipeline implements Middleware
+{
     public function process( Request $request, Response $response, $next )
     {
         $next = $next($request, $response);

@@ -1,15 +1,14 @@
 <?php
+namespace Examp\Core;
 
-namespace Core;
-
-use Contracts\Middleware;
-use Core\Response\Response;
-use Core\Request\Request;
+use Examp\Contracts\Middleware;
+use Examp\Core\Response\Response;
+use Examp\Core\Request\Request;
 /**
  * Description of MiddlewarePipeline
  */
-class MiddlewarePipeline {
-    
+class MiddlewarePipeline
+{    
     private $pipes = [];
     
     public function addPipe( Middleware $pipe)

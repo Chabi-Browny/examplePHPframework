@@ -1,10 +1,13 @@
 <?php
-namespace Core\Containers;
+namespace Examp\Core\Containers;
+
+use Examp\Contracts\Containers;
+use Exception;
 
 /**
  * Description of ServiceContainer
  */
-class ServiceContainer implements \Contracts\Containers{
+class ServiceContainer implements Containers{
 
     private $services;
 
@@ -22,12 +25,12 @@ class ServiceContainer implements \Contracts\Containers{
     {
         if ( $this->has($key) )
         {
-            throw new \Exception('The service under this key ('.$key.') is already exists!');
+            throw new Exception('The service under this key ('.$key.') is already exists!');
         }
 
         if ( !is_callable($value) && !is_object($value) )
         {
-            throw new \Exception('The service is must be a function or an object!');
+            throw new Exception('The service is must be a function or an object!');
         }
 
         $this->services[$key] = $value;
@@ -46,7 +49,7 @@ class ServiceContainer implements \Contracts\Containers{
         }
         else
         {
-            throw new \Exception('There is no service under this key: '.$key.'!');
+            throw new Exception('There is no service under this key: '.$key.'!');
         }
     }
 

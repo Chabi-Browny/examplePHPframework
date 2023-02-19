@@ -1,9 +1,9 @@
 <?php
 
-namespace Contracts;
+namespace Examp\Contracts;
 
-use Core\Response\Response;
-use Core\Request\Request;
+use Examp\Core\Response\Response;
+use Examp\Core\Request\Request;
 /**
  */
 interface Middleware {

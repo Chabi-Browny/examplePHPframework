@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
+use Examp\Core\Controller;
+
 /**
  * Description of NotFoundController
  */
-class NotFoundController extends \Core\Controller{
-    
+class NotFoundController extends Controller
+{    
     public function index()
     {
         $this->setView('404');

@@ -1,40 +1,44 @@
 <?php
+namespace Examp\Core;
+
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-namespace Core;
+use Examp\Core\Containers\ServiceContainer;
+use Examp\Core\Containers\ConfigContainer;
+use Examp\Core\Request\Request;
+use Examp\Core\Response\Response;
+use Examp\Core\Response\ResponseEmitter;
+use Examp\Core\MiddlewarePipeline;
 
-use Core\Containers\ServiceContainer;
-use Core\Containers\ConfigContainer;
-use Core\Request\RequestFactory;
-
-class Application {
-    
-    private static $instance;
+class Application 
+{
+    protected static $instance;
         
     private function __construct(){}
     
+    /**/
     public static function init()
     {
-        if(self::$instance == NULL)
+        if ( self::$instance === null )
         {
             self::$instance = new self();
         }
+        
         return self::$instance;
     }
     
+    /**/
     public function run( ConfigContainer $config ,ServiceContainer $serviceContainer)
     {
         try
-        {
-            session_start();
-            
+        {  
             $serviceContainer->add('config', $config);
-                        
+            
             $response = $serviceContainer
                 ->get(MiddlewarePipeline::class)
-                ->pipeline( $serviceContainer->get(RequestFactory::class), new Response\Response([], '', 200, 'Ok'));
+                ->pipeline( $serviceContainer->get(Request::class), new Response([], '', 200, 'Ok'));
             
-            $serviceContainer->get(Response\ResponseEmitter::class)->emit($response);
+            $serviceContainer->get(ResponseEmitter::class)->emit($response);
         }
         catch(\Exception $errorReport)
         {

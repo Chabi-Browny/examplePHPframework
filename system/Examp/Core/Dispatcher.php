@@ -1,9 +1,9 @@
 <?php
+namespace Examp\Core;
 
-namespace Core;
-
-use Core\Containers\ServiceContainer;
-use Core\Request\Request;
+use Examp\Core\Containers\ServiceContainer;
+use Examp\Core\Request\Request;
+use Exception;
 /**
  * Description of Dispatcher
  */
@@ -21,6 +21,7 @@ class Dispatcher {
         $this->services = $services;
     }
     
+    /**/
     public function addRoute(string $action, string $calling, string $method = 'GET')
     {
         $patternAction = '%^'.$action.'$%';
@@ -65,7 +66,7 @@ class Dispatcher {
         }
         
         $methodNameMarked = !empty($methodName) ? " -- ".$methodName." -- " : '';
-        throw new \Exception("The controller is not an object or, has not the called method".$methodNameMarked.", or has not index method!");
+        throw new Exception("The controller is not an object or, has not the called method".$methodNameMarked.", or has not index method!");
     }
     
 }

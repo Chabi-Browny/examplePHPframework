@@ -1,5 +1,5 @@
 <?php
-use Core\Containers\ConfigContainer;
+use Examp\Core\Containers\ConfigContainer;
 
 $config = new ConfigContainer();
 
@@ -7,8 +7,8 @@ $config->add('basePath', BASEPATH);
 
 $config->add('dbDriver', 'mysql');
 $config->add('dbHost', 'localhost');
-$config->add('dbName', 'prio_db');
-$config->add('dbUser', 'root');
-$config->add('dbPass', '');
+$config->add('dbName', ''); // exmaple_db
+$config->add('dbUser', ''); // example_user
+$config->add('dbPass', ''); // example_password
 
 return $config;

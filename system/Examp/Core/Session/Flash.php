@@ -1,9 +1,9 @@
 <?php
 
-namespace Core\Session;
+namespace Examp\Core\Session;
 
-use Contracts\Session;
-use Core\Session\Session as BuiltInSession;
+use Examp\Contracts\Session;
+use Examp\Core\Session\Session as BuiltInSession;
 /**
  * Description of Flash
  */

@@ -1,14 +1,14 @@
 <?php
 
-namespace Core\Request;
+namespace Examp\Core\Request;
 
-use Core\Url;
-use Core\Session\Session;
+use Examp\Core\Url;
+use Examp\Core\Session\Session;
 /**
  * Description of Request
  */
-class Request {
-    
+class Request
+{    
     private $uri;
     private $method;
     private $header;

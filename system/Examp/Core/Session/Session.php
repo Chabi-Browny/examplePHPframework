@@ -1,11 +1,12 @@
 <?php
 
-namespace Core\Session;
+namespace Examp\Core\Session;
 
-use Core\Session\Flash;
+use Examp\Core\Session\Flash;
+use Examp\Contracts\Session as SessionInterface;
 
-class Session implements \Contracts\Session{
-                   
+class Session implements SessionInterface
+{                   
     public function has(string $key)
     {
         return array_key_exists($key, $_SESSION);

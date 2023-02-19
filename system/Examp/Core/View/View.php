@@ -1,15 +1,14 @@
 <?php
 
-namespace Core\View;
+namespace Examp\Core\View;
 
 /**
- * Description of ModelAndView
+ * Description of View
  */
-class ModelAndView {
-    
-    private $viewName;
-//    private $viewData = [];
-    private $viewData;
+class View 
+{    
+    protected $viewName;
+    protected $viewData;
     
     public function getViewName() 
     {

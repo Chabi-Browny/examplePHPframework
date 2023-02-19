@@ -1,10 +1,13 @@
 <?php
+
+namespace Examp\Core;
+
 defined('ISRUN') OR exit('Direct access to the script not allowed!');
 
-namespace Core;
+use PDO;
 
-class Database extends \PDO {
-    
+class Database extends PDO
+{    
     private $_dbType;
     private $_dbHost;
     private $_dbName;
@@ -31,9 +34,9 @@ class Database extends \PDO {
                 $this->_dbUser,
                 $this->_dbPass,
                 [
-                    \PDO::ATTR_ERRMODE => self::ERRMODE_EXCEPTION,
-                    \PDO::MYSQL_ATTR_FOUND_ROWS => true,
-                    \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+                    PDO::ATTR_ERRMODE => self::ERRMODE_EXCEPTION,
+                    PDO::MYSQL_ATTR_FOUND_ROWS => true,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
                 ]);
         }
         catch ( \PDOException $e )

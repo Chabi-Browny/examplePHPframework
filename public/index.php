@@ -1,10 +1,11 @@
 <?php
 declare (strict_types = 1);
 
-ini_set('display_error', '1');
-error_reporting(E_ALL);
+session_start();
 
 define('ISRUN', microtime());
+
+
 $environment =
         [
             'prod' => 'production',
@@ -14,28 +15,34 @@ $environment =
 
 define('ENV', $environment['dev']);
 
-defined('DS') OR define('DS', DIRECTORY_SEPARATOR);
-defined('BASEPATH') OR define('BASEPATH', dirname(__DIR__));
-defined('SYSPATH') OR define('SYSPATH', BASEPATH.DS.'system');
-
-if(file_exists(SYSPATH.DS.'sys.php'))
+if (ENV === 'development')
 {
-    //defined('') OR
-    defined('EXAMPPATH') OR define('EXAMPPATH', SYSPATH.DS.'Examp');
-    define('SUPPORTPATH', EXAMPPATH.DS.'support');
+    ini_set('display_errors', '1');
+    ini_set('display_startup_errors', '1');
+    error_reporting(E_ALL);    
+}
 
-    if(ENV == 'development' && file_exists(SUPPORTPATH.DS.'helpers'.DS.'dev_helpr.php'))
+defined('DS') OR define('DS', DIRECTORY_SEPARATOR);
+
+defined('BASEPATH') OR define('BASEPATH', dirname(__DIR__));
+defined('SYSPATH') OR define('SYSPATH', BASEPATH . DS . 'system');
+
+if (file_exists(SYSPATH.DS.'sys.php'))
+{
+    defined('EXAMPPATH') OR define('EXAMPPATH', SYSPATH . DS . 'Examp');
+    defined('SUPPORTPATH') OR define('SUPPORTPATH', EXAMPPATH . DS . 'support');
+
+    if(ENV === 'development' && file_exists(SUPPORTPATH . DS . 'helpers' . DS . 'dev_helpr.php'))
     {
-        require_once SUPPORTPATH.DS.'helpers'.DS.'dev_helpr.php';
+        require_once SUPPORTPATH . DS . 'helpers' . DS . 'dev_helpr.php';
     }
 
-    if(file_exists(SUPPORTPATH.DS.'autoloaders.php'))
+    if(file_exists(SUPPORTPATH . DS . 'autoloaders.php'))
     {
-        require_once SUPPORTPATH.DS.'autoloaders.php';
+        require_once SUPPORTPATH . DS . 'autoloaders.php';
     }
 
-    require_once SYSPATH.DS.'sys.php';
-
+    require_once SYSPATH . DS . 'sys.php';
 }
 else
 {

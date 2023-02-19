@@ -1,12 +1,12 @@
 <?php
 
-namespace Core\UI;
+namespace Examp\Core\UI;
 
 /**
  * Description of FormResponseFromatter
  */
-class FormResponseFormater {
-
+class FormResponseFormater
+{
     const MESSAGE_TYPE = [
         'info' => 'msg-info',
         'warn' => 'msg-warn',

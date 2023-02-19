@@ -1,15 +1,19 @@
 <?php
 
-namespace Core\Middleware;
+namespace Examp\Core\Middleware;
 
-use Core\Request\Request;
-use Core\Response\Response;
-use Core\Response\ResponseFactory;
-use Core\Dispatcher;
+use Examp\Core\Controller;
+use Examp\Core\Request\Request;
+use Examp\Core\Response\Response;
+use Examp\Core\Response\ResponseFactory;
+use Examp\Core\Dispatcher;
+use Examp\Contracts\Middleware;
+
+use Exception;
 /**
  * Description of DispatcherMiddleware
  */
-class DispatcherMiddleware implements \Contracts\Middleware{
+class DispatcherMiddleware implements Middleware{
     
     private $dispatcher;
     private $resonseFactory;
@@ -23,6 +27,11 @@ class DispatcherMiddleware implements \Contracts\Middleware{
     public function process( Request $request, Response $response, callable $next) 
     {
         $controllerResponse = $this->dispatcher->dispatch($request);
+        
+        if (!$controllerResponse instanceof Controller)
+        {
+            throw new Exception('Missing instance: ' . Controller::class);
+        }
         
         return $this->resonseFactory->createResponse($controllerResponse, $request, $response);
     }

@@ -1,8 +1,21 @@
 <?php
+/**
+ * S.D.G.! P.G.A.! :)
+ * 
+ * based on Devanych View Renderer, Thank you Devanych
+ * * https://github.com/devanych/view-renderer
+ * @copyright - (partly) - (c) 2020, Evgeniy Zyubin,
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions
+ */
 
-namespace Core\View;
+namespace Examp\Core\View;
 
-use Core\Handlers\Files;
+use Examp\Core\Handlers\Files;
 
 use function extract;
 use function ob_end_clean;
@@ -11,8 +24,8 @@ use function ob_start;
 /**
  * Description of ViewRenderer
  */
-class ViewRenderer {
-
+class ViewRenderer
+{
     private $templatePath;
 
     private $block = [];
@@ -27,24 +40,24 @@ class ViewRenderer {
 
     public function render(string $viewName, array $viewData = []): string
     {
-        if(ob_get_level()){ ob_get_clean(); }
-
         $level = ob_get_level();
+        if ($level)
+        {
+            ob_get_clean();
+        }
+
         $this->layout = NULL;
-        ob_start();
 
         try
         {
             // if there is a layout setted up, then it will be reachable
             // and if there a block setted up it will be also reachable,
             //    but it was not nulled like the layout
-            echo $this->getViewContent( $viewName, $viewData);
-
-            $content = ob_get_clean();
+            $content =  $this->getViewContent( $viewName, $viewData);
         }
         catch( \Throwabel $error)
         {
-            while( ob_get_level() > $level)
+            while ($level < ob_get_level())
             {
                 ob_end_clean();
             }
@@ -56,8 +69,6 @@ class ViewRenderer {
         {
             return $content;
         }
-//        $this->block['content'] = $content;
-//        $this->block = $content;
 
         return $this->render( $this->layout, $viewData );
     }
@@ -132,7 +143,7 @@ class ViewRenderer {
     }
 
     /**/
-    public function endBlock()
+    public function endBlock(): void
     {
         if(!$this->blockName)
         {
@@ -154,7 +165,7 @@ class ViewRenderer {
     }
 
     /**/
-    public function getBlock(string $blockKey) :string
+    public function getBlock(string $blockKey): string
     {
         return $this->block[$blockKey] ?? '';
     }

@@ -1,15 +1,16 @@
 <?php
 
-namespace Core\Middleware;
+namespace Examp\Core\Middleware;
 
-use Core\Request\Request;
-use Core\Response\Response;
-use Core\Session\Session;
+use Examp\Core\Request\Request;
+use Examp\Core\Response\Response;
+use Examp\Core\Session\Session;
+use Examp\Contracts\Middleware;
 
 /**
  * Description of AuthenticationMiddleware
  */
-class AuthenticationMiddleware implements \Contracts\Middleware{
+class AuthenticationMiddleware implements Middleware{
     
     private $protectedLinks;
     

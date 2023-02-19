@@ -1,7 +1,8 @@
 <?php
-namespace Core\Handlers\Input;
+namespace Examp\Core\Handlers\Input;
 
-use Core\Helpers\StringCleaner;
+use Examp\Core\Helpers\StringCleaner;
+use Exception;
 /**
  * Description of InputCleaner
  */
@@ -32,7 +33,7 @@ class InputCleaner {
         } 
         else 
         {
-            throw new \Exception("The input data to clean is not scalar!");
+            throw new Exception("The input data to clean is not scalar!");
         }
     }
     

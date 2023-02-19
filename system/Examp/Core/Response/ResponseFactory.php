@@ -1,15 +1,15 @@
 <?php
 
-namespace Core\Response;
+namespace Examp\Core\Response;
 
-use Core\Controller;
-use Core\Request\Request;
-use Core\View\ViewRenderer;
+use Examp\Core\Controller;
+use Examp\Core\Request\Request;
+use Examp\Core\View\ViewRenderer;
 /**
  * Description of ResponseFactory
  */
-class ResponseFactory {
-
+class ResponseFactory
+{
     private $viewRenderer;
 
     public function __construct( ViewRenderer $viewRenderer)
@@ -37,21 +37,24 @@ class ResponseFactory {
         }
         else
         {
-            $modelAndViewObj = $controllerReponse->getModelAndView();
-            $viewName = $modelAndViewObj->getViewName();
-
-            $viewDataMerge = array_merge(
-                $modelAndViewObj->getViewData(),
-                [
-                    'baseUrl' => $request->getBaseUrl(),
-                    'sess' => $session->getAll(),
-                    'flash' => $session->flash()->getAll()
-                ]
+            $modelAndViewObj = $controllerReponse->getView();
+            
+            $response->setBody( 
+                $this->viewRenderer->render(
+                    $modelAndViewObj->getViewName(), 
+                    array_merge(
+                        $modelAndViewObj->getViewData(),
+                        [
+                            'baseUrl' => $request->getBaseUrl(),
+                            'sess' => $session->getAll(),
+                            'flash' => $session->flash()->getAll()
+                        ]
+                    )
+                ) 
             );
-
-            $response->setBody( $this->viewRenderer->render($viewName, $viewDataMerge) );
+            
             return $response;
         }
     }
 
-}/////end ResponseFactory
+} // end ResponseFactory

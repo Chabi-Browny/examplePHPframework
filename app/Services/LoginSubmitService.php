@@ -1,13 +1,15 @@
 <?php
 namespace App\Services;
 
-use Core\Database;
-use Core\Session\Session;
+use Examp\Core\Database;
+use Examp\Core\Session\Session;
+
+use PDO;
 /**
  * Description of LoginSubmitService
  */
-class LoginSubmitService {
-
+class LoginSubmitService 
+{
     const LOGGIN_KEY = 'logged';
 
     private $dbconn;
@@ -24,9 +26,9 @@ class LoginSubmitService {
         $sql = 'SELECT id, u_name, u_pass FROM users WHERE u_email = :email ;';
 
         $stm = $this->dbconn->prepare($sql);
-        $stm->bindParam('email', $email, \PDO::PARAM_STR);
+        $stm->bindParam('email', $email, PDO::PARAM_STR);
         $stm->execute();
-        $result = $stm->fetch(\PDO::FETCH_OBJ);
+        $result = $stm->fetch(PDO::FETCH_OBJ);
 
         if ($result !== false && password_verify( hash('sha3-512', $pass), $result->u_pass) )
         {
