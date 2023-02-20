@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title><?php if(!empty($title)){ echo $title; }?></title>
-        <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>/assets/css/style.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>/assets/styles/style.css">
     </head>
     <body>
         <div class="">

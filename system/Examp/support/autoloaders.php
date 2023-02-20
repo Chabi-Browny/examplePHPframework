@@ -1,11 +1,16 @@
 <?php
+
 function autoloadSystemClasses($className)
 {
+    $prefix = 'Examp';
     $ds = DIRECTORY_SEPARATOR;
-//    $prefix = 'Examp';
-    
     $systemPath = dirname(dirname(__DIR__));
-
+    
+    if (substr($className, 0, strlen($prefix)) !== $prefix) 
+    {
+        return;
+    }
+    
     $classPath = strtr( $systemPath . $ds . $className . '.php', '/\\', $ds.$ds);
 
     if(file_exists($classPath))
@@ -15,9 +20,19 @@ function autoloadSystemClasses($className)
 }
 spl_autoload_register('autoloadSystemClasses');
 
+
 function autoloadAppClasses($className)
 {
-    $classPath = strtr( BASEPATH . DS . lcfirst($className) . '.php', '/\\', DS.DS);
+    $prefix = 'App';
+    $ds = DIRECTORY_SEPARATOR;
+    $baseDir = dirname(dirname(dirname(__DIR__)));
+    
+    if (substr($className, 0, strlen($prefix)) !== $prefix)
+    {
+        return;
+    }
+    
+    $classPath = strtr( $baseDir . $ds . lcfirst($className) . '.php', '/\\', $ds.$ds);
 
     if(file_exists($classPath))
     {
