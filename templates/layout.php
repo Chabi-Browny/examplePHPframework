@@ -6,14 +6,14 @@
         <link rel="stylesheet" type="text/css" href="<?php echo $baseUrl?>/assets/styles/style.css">
     </head>
     <body>
-        <div class="">
-            <div class="conent-box">
+        <main class="main-container">
+            <header class="conent-box">
                 <div class="content">
                     <?php 
                         echo $this->setContentPart('header');
                     ?>
                 </div>
-            </div>
+            </header>
             <hr/>
             <div class="conent-box">
                 <div class="content">
@@ -21,13 +21,13 @@
                 </div>
             </div>
             <hr/>
-            <div class="conent-box">
+            <footer class="conent-box">
                 <div class="content">  
                     <?php
                         echo $this->setContentPart('footer');
                     ?>
                 </div>
-            </div>
-        </div>
+            </footer>
+        </main>
     </body>
 </html>
