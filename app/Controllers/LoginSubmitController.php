@@ -6,20 +6,26 @@ use Examp\Core\Containers\ServiceContainer;
 use Examp\Core\Handlers\Input\InputsManager;
 
 use App\Services\LoginSubmitService;
+
 /**
  * Description of LoginSubmitController
  */
 class LoginSubmitController extends Controller {
 
     /**
+     * @desc - LoginSubmitService object
      * @var LoginSubmitService
      */
     private $loginService;
     /**
+    * @desc - InputsManager object
     * @var InputsManager
     */
     private $inputManager;
 
+    /**
+     * @param ServiceContainer $container
+     */
     public function __construct( ServiceContainer $container )
     {
         parent::__construct();
@@ -28,12 +34,17 @@ class LoginSubmitController extends Controller {
         $this->loginService = $container->get(LoginSubmitService::class);
     }
 
+    /**
+     * @desc - submit the login data if valid, then verifies the data, and use it
+     * @return Controller
+     */
     public function submit()
     {
         $retVal = NULL;
 
         $this->inputManager->setFilter('usemail', 'require|email|maxLength:50');
         $this->inputManager->setFilter('paw', 'require|minLength:2');
+        
         if ( $this->inputManager->scan() === TRUE )
         {
             $loginCheck = $this->loginService->login($this->inputManager->getPost('usemail'), $this->inputManager->getPost('paw'));
@@ -55,10 +66,14 @@ class LoginSubmitController extends Controller {
         return $retVal;
     }
 
-    /**/
+    /**
+     * @desc - check the user, and then log them out, if they are logged in, and redirect to the proper route
+     * @return type
+     */
     public function logout()
     {
-        if ($this->loginService->logout()) {
+        if ($this->loginService->isLoggedIn()) {
+            $this->loginService->logout();
             return $this->setRedirect('login');
         }
         return $this->setRedirect('/');

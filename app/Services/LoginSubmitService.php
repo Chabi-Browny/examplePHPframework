@@ -5,6 +5,7 @@ use Examp\Core\Database;
 use Examp\Core\Session\Session;
 
 use PDO;
+
 /**
  * Description of LoginSubmitService
  */
@@ -12,15 +13,33 @@ class LoginSubmitService
 {
     const LOGGIN_KEY = 'logged';
 
+    /**
+     * @desc - database connection object
+     * @var Database 
+     */
     private $dbconn;
+    /**
+     * @desc - Session object
+     * @var Session
+     */
     private $session;
 
+    /**
+     * @param Database $db
+     * @param Session $session
+     */
     public function __construct(Database $db, Session $session )
     {
         $this->dbconn = $db;
         $this->session = $session;
     }
 
+    /**
+     * @desc - Log the user if has verified record in the db
+     * @param string $email
+     * @param string $pass
+     * @return bool
+     */
     public function login(string $email, string $pass)
     {
         $sql = 'SELECT id, u_name, u_pass FROM users WHERE u_email = :email ;';
@@ -45,18 +64,20 @@ class LoginSubmitService
         }
     }
 
+    /**
+     * @desc - logout the user
+     */
     public function logout()
     {
-        if ($this->checkLogg())
-        {
-            $this->session->remove(self::LOGGIN_KEY);
-            $this->session->clearAll();
-            return TRUE;
-        }
-        return FALSE;
+        $this->session->remove(self::LOGGIN_KEY);
+        $this->session->clearAll();
     }
 
-    public function checkLogg()
+    /**
+     * @desc - Checking the user is logged in
+     * @return type
+     */
+    public function isLoggedIn()
     {
         return $this->session->has(self::LOGGIN_KEY);
     }

@@ -46,6 +46,6 @@ if (file_exists(SYSPATH.DS.'sys.php'))
 }
 else
 {
-    header('503 Service Unavailable', true, 503);
+    header('HTTP/1.1 503 Service Unavailable', true, 503);
     die();
 }

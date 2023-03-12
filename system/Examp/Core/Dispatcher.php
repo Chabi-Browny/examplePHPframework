@@ -4,11 +4,12 @@ namespace Examp\Core;
 use Examp\Core\Containers\ServiceContainer;
 use Examp\Core\Request\Request;
 use Exception;
+
 /**
  * Description of Dispatcher
  */
-class Dispatcher {
-    
+class Dispatcher
+{
     const METHOD_DIVIDER = ':::';
     
     private $routes = [];
@@ -24,10 +25,11 @@ class Dispatcher {
     /**/
     public function addRoute(string $action, string $calling, string $method = 'GET')
     {
-        $patternAction = '%^'.$action.'$%';
-        $this->routes[strtoupper($method)][$patternAction] = $calling;
+        $actionPattern = '%^'.$action.'$%';
+        $this->routes[strtoupper($method)][$actionPattern] = $calling;
     }
     
+    /**/
     public function dispatch( Request $request)
     {
         $uri = $request->getUri();
@@ -46,7 +48,8 @@ class Dispatcher {
         return $this->invokeHandler($this->notFoundController);
     }
     
-    private function invokeHandler(string $called, $matchedParams = FALSE)
+    /**/
+    protected function invokeHandler(string $called, $matchedParams = FALSE)
     {        
         $splittedCall = explode(self::METHOD_DIVIDER, $called);
         $controllerNameAlias = $splittedCall[0];
@@ -55,7 +58,8 @@ class Dispatcher {
         return $this->invokeController($controllerNameAlias, $methodName, $matchedParams);
     }
     
-    private function invokeController($controllerNameAlias, $methodName, $matchedParams)
+    /**/
+    protected function invokeController($controllerNameAlias, $methodName, $matchedParams)
     {
         $calledControllerObj = $this->services->get($controllerNameAlias);
         $calledMethodName = !empty($methodName) ? $methodName : 'index';

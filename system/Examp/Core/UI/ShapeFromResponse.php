@@ -5,7 +5,7 @@ namespace Examp\Core\UI;
 /**
  * Description of FormResponseFromatter
  */
-class FormResponseFormater
+class ShapeFromResponse
 {
     const MESSAGE_TYPE = [
         'info' => 'msg-info',
@@ -20,48 +20,57 @@ class FormResponseFormater
 
     public function __construct( $responseTextStock, string $msgType = null)
     {
-        $this->responseTextStock = $responseTextStock;
         $this->messageType = $msgType ?? 'info';
+        $this->responseTextStock = $this->storeMessageToShape($responseTextStock);
     }
 
-    /**/
-    public function getFormattedMessage()
+    /**
+     * @desc - Get the processed text
+     * @return string
+     */
+    public function getShapedMessage()
     {
         $warpperContainer = '<div class="msg-wrapper">';
 
-        $warpperContainer .= $this->formatMessage();
+        $warpperContainer .= $this->shapeMessage();
 
         $warpperContainer .= '</div>';
 
         return $warpperContainer;
     }
 
-    /**/
-    protected function storeMessageToFormat()
+    /**
+     * @desc - Store the incoming data to further process
+     * @param type $responseTextData
+     * @return array
+     */
+    protected function storeMessageToShape($responseTextData): array
     {
         $messageStock = [];
-        if (!empty($this->responseTextStock))
+        
+        if (!empty($responseTextData))
         {
-            if ( !is_array($this->responseTextStock))
+            if ( !is_array($responseTextData))
             {
-                $messageStock[$this->messageType] = $this->responseTextStock;
+                $messageStock[$this->messageType] = $responseTextData;
             }
             else
             {
-                $messageStock = $this->responseTextStock;
+                $messageStock = $responseTextData;
             }
         }
         return $messageStock;
     }
 
-    /**/
-    protected function formatMessage()
+    /**
+     * @desc - Format the stored text data into proper string
+     * @return string
+     */
+    protected function shapeMessage(): string
     {
         $formatedMessages = '';
 
-        $messages = $this->storeMessageToFormat();
-
-        foreach ($messages as $msgType => $respTexts)
+        foreach ($this->responseTextStock as $msgType => $respTexts)
         {
             if (is_array($respTexts))
             {

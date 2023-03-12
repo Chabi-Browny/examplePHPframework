@@ -5,19 +5,35 @@ namespace Examp\Core\Response;
 use Examp\Core\Controller;
 use Examp\Core\Request\Request;
 use Examp\Core\View\ViewRenderer;
+use Examp\Core\Response\Response;
+
 /**
  * Description of ResponseFactory
  */
 class ResponseFactory
 {
+    /**
+     * @desc - ViewRenderer object
+     * @var ViewRenderer
+     */
     private $viewRenderer;
 
+    /**
+     * @param ViewRenderer $viewRenderer
+     */
     public function __construct( ViewRenderer $viewRenderer)
     {
         $this->viewRenderer = $viewRenderer;
     }
 
-    public function createResponse( Controller $controllerReponse, Request $request, Response $response)
+    /**
+     * @desc - Creates a proper response
+     * @param Controller $controllerReponse
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function createResponse( Controller $controllerReponse, Request $request, Response $response): Response
     {
         $redirectTarget = $controllerReponse->getRedriectTarget();
         $session = $request->getSession();
