@@ -64,16 +64,18 @@ body {
 }
 
 /*footer*/
-/*other parts*/
+/* other parts */
 .msg-wrapper {
   padding: 10px 0px;
   text-align: center;
 }
 .msg-wrapper .msg-warn {
   color: #ff9900;
+  text-shadow: 1px 1px 1px rgb(50, 50, 50), 1px 1px 8px rgba(255, 153, 0, 0.75);
 }
 .msg-wrapper .msg-error {
   color: #f00;
+  text-shadow: 1px 1px 1px rgb(50, 50, 50), 1px 1px 8px rgba(255, 0, 0, 0.75);
 }
 
 /*# sourceMappingURL=style.css.map */
