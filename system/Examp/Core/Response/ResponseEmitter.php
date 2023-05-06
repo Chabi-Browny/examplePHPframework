@@ -8,7 +8,7 @@ use Exception;
  * Description of ResponseEmitter
  */
 class ResponseEmitter
-{    
+{
     /**/
     public function emit(Response $response)
     {
@@ -16,20 +16,22 @@ class ResponseEmitter
         {
             throw new Exception("The header is already sent!");
         }
-        
+
         $this->setStatusLine( $response->getProtocol(), $response->getStatusCode(), $response->getReasonPhrase());
-        
+
         $this->setHeader($response->getHeader());
-        
+
         $this->emitBody( $response->getBody() );
     }
-    
+
+    /**/
     protected function setStatusLine($protocol, $statusCode, $reasonPhrase)
     {
         $status = sprintf('%s %d %s', $protocol, $statusCode, $reasonPhrase);
         header($status, TRUE, $statusCode);
     }
-    
+
+    /**/
     protected function setHeader(array $headers)
     {
         foreach($headers as $name => $value)
@@ -37,10 +39,11 @@ class ResponseEmitter
             header( sprintf('%s: %s', $name, $value), FALSE);
         }
     }
-    
+
+    /**/
     protected function emitBody(string $bodyContent)
     {
         echo $bodyContent;
     }
-    
+
 }

@@ -6,7 +6,7 @@ namespace Examp\Core\Response;
  * Description of Response
  */
 class Response
-{    
+{
     /**
      * @var array
      */
@@ -23,9 +23,15 @@ class Response
      * @var string
      */
     protected $reasonPhrase;
+    /**
+     * @var string
+     */
     protected $protocol;
+    /**
+     * @var string
+     */
     protected $baseUrl;
-    
+
     /**
      * @param array $header
      * @param string $body
@@ -40,7 +46,7 @@ class Response
         $this->reasonPhrase = $reasonPhrase;
         $this->protocol = filter_input(INPUT_SERVER, 'SERVER_PROTOCOL');
     }
-    
+
     /**
      * @desc - get the http protocol
      * @return string
@@ -49,12 +55,12 @@ class Response
     {
         return $this->protocol;
     }
-        
+
     /**
      * @desc - Get response header
      * @return array
      */
-    public function getHeader() 
+    public function getHeader()
     {
         return $this->header;
     }
@@ -67,17 +73,17 @@ class Response
     {
         return $this->body;
     }
-    
+
     /**
      * @desc - Set the body to change it. Use if it is necessary
      * @param type $body
      * @return void
      */
-    public function setBody($body): void 
+    public function setBody($body): void
     {
         $this->body = $body;
     }
-    
+
     /**
      * @desc - Get the http status code
      * @return int
@@ -95,7 +101,7 @@ class Response
     {
         return $this->reasonPhrase;
     }
-    
+
     /**
      * @desc - Set the base URL, if it is necessary
      * @param string $baseUrl
@@ -104,7 +110,7 @@ class Response
     {
         $this->baseUrl = $baseUrl;
     }
-    
+
     /**
      * @desc - Makes a redirection
      * @param string $target
@@ -117,7 +123,7 @@ class Response
         {
             $target = '';
         }
-        
+
         /**
          * return with a new Response object with "Found" status
          */
@@ -127,5 +133,5 @@ class Response
             302, 'Found'
         );
     }
-    
+
 }

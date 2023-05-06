@@ -2,11 +2,16 @@
 namespace Examp\Core;
 
 use Examp\Core\Helpers\StringCleaner;
+
 /**
  * Description of Url
  */
-class Url {
-
+class Url
+{
+    /**
+     * @desc - Get the domain with the http(s)
+     * @return string
+     */
     public function getBaseUrl(): string
     {
         $checkHttps = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https://' : 'http://';
@@ -15,26 +20,40 @@ class Url {
         return $host == 'localhost' ? $checkHttps.$host.$pathInfo['dirname'] : $checkHttps.$host;
     }
 
+    /**
+     * @desc - Get the full url
+     * @return string
+     */
     public function getFullUrl(): string
     {
         return $this->getBaseUrl().$this->getFullUri();
     }
 
+    /**
+     * @desc - Get the url without the domain
+     * @return string
+     */
     public function getFullUri(): string
     {
-        return $this->getUri();
+        return $this->getCleanedUri();
     }
 
-    private function getUri(): string
+    /**
+     * @desc - Get examined URI
+     * @return string
+     */
+    private function getCleanedUri(): string
     {
         $getUri = $_SERVER['REQUEST_URI'] ?? '/';
         $stringCleaner = new StringCleaner();
+
         $rtrimUri = $stringCleaner->setUncleanedData($getUri)->trimBothSides()->getCleanedData();
         if (empty($rtrimUri))
         {
             $rtrimUri = '/';
         }
-        return $stringCleaner->htmlSpecial($rtrimUri)->getCleanedData();
+
+        return $stringCleaner->setUncleanedData($rtrimUri)->htmlSpecial()->getCleanedData();
     }
 
 }
