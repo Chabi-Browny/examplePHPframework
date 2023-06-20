@@ -5,6 +5,7 @@ namespace Examp\Core\Response;
 use Examp\Core\Controller;
 use Examp\Core\Request\Request;
 use Examp\Core\View\ViewRenderer;
+use Examp\Core\View\View;
 use Examp\Core\Response\Response;
 
 /**
@@ -35,6 +36,9 @@ class ResponseFactory
      */
     public function createResponse( Controller $controllerReponse, Request $request, Response $response): Response
     {
+        $baseUrl = $request->getBaseUrl();
+        $response->setBaseUrl($baseUrl);
+
         $redirectTarget = $controllerReponse->getRedriectTarget();
         $session = $request->getSession();
 
@@ -53,22 +57,23 @@ class ResponseFactory
         }
         else
         {
+            /** @var View $modelAndViewObj */
             $modelAndViewObj = $controllerReponse->getView();
-            
-            $response->setBody( 
+
+            $response->setBody(
                 $this->viewRenderer->render(
-                    $modelAndViewObj->getViewName(), 
+                    $modelAndViewObj->getViewName(),
                     array_merge(
                         $modelAndViewObj->getViewData(),
                         [
-                            'baseUrl' => $request->getBaseUrl(),
+                            'baseUrl' => $baseUrl,
                             'sess' => $session->getAll(),
                             'flash' => $session->flash()->getAll()
                         ]
                     )
-                ) 
+                )
             );
-            
+
             return $response;
         }
     }

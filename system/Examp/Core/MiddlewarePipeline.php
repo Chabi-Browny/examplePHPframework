@@ -9,13 +9,13 @@ use Examp\Core\Request\Request;
  * Description of MiddlewarePipeline
  */
 class MiddlewarePipeline
-{    
+{
     /**
      * @desc - store the middlewares
      * @var array
      */
     private $pipes = [];
-    
+
     /**
      * @desc - adding a middleware in the pipeline
      * @param Middleware $pipe
@@ -24,7 +24,7 @@ class MiddlewarePipeline
     {
         $this->pipes[] = $pipe;
     }
-    
+
     /**
      * @desc - bind middleware layers into a line
      * @param Request $request
@@ -32,19 +32,17 @@ class MiddlewarePipeline
      * @return object
      */
     public function pipeline( Request $request, Response $response)
-    {       
-        $response->setBaseUrl($request->getBaseUrl());
-        
+    {
         return $this->__invoke($request, $response);
     }
-    
+
     /**
      * @desc - it's called when the class called like a function
      * @param Request $request
      * @param Response $response
      * @return Response
      */
-    public function __invoke( Request $request, Response $response ) 
+    public function __invoke( Request $request, Response $response )
     {
         $pipe = array_shift($this->pipes);
         if($pipe === NULL)
@@ -53,5 +51,5 @@ class MiddlewarePipeline
         }
         return $pipe->process($request, $response, $this);
     }
-    
+
 }
