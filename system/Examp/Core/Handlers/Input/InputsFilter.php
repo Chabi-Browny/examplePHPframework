@@ -1,8 +1,8 @@
 <?php
 namespace Examp\Core\Handlers\Input;
 
-class InputsFiler {
-    
+class InputsFilter
+{
     /**
      * @desc - check the $inData is empty
      * @param type $inData
@@ -15,7 +15,7 @@ class InputsFiler {
         else //nem üres - tehát jó
             { return TRUE; }
     }
-    
+
     /**
      * @desc - check the $inData is not grater than $maxLength
      * @param type $inData
@@ -26,7 +26,7 @@ class InputsFiler {
     {
         return mb_strlen($inData, 'utf8') < $maxLength;
     }
-    
+
     /**
      * @desc - check the $inData is not less than $minLength
      * @param type $inData
@@ -37,7 +37,7 @@ class InputsFiler {
     {
         return mb_strlen($inData, 'utf8') > $minLength;
     }
-        
+
     /**
      * @desc - check the $inData is a valid email string
      * @param type $inData

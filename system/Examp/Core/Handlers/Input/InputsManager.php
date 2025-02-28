@@ -2,7 +2,7 @@
 
 namespace Examp\Core\Handlers\Input;
 
-use Examp\Core\Handlers\Input\InputsFiler;
+use Examp\Core\Handlers\Input\InputsFilter;
 use Examp\Core\Handlers\Input\InputCleaner;
 use Examp\Core\Request\Request;
 use Exception;
@@ -58,7 +58,7 @@ class InputsManager
     public function scan()
     {
         $filterError = [];
-        $inputCheck = new InputsFiler();
+        $inputCheck = new InputsFilter();
 
         foreach($this->filters as $inputName => $filterArr)
         {

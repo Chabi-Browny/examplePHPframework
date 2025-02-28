@@ -14,7 +14,7 @@ use Examp\Core\Response\Response;
 class CleanupFlashMiddleware extends MiddlewarePipeline implements Middleware
 {
     /**
-     * @desc - the makes a flash layer from the last response layer in the middlewares
+     * @desc - the makes a flash layer before the last response layer in the middleware pipeline
      * @param Request $request
      * @param Response $response
      * @param callable $next
@@ -22,13 +22,17 @@ class CleanupFlashMiddleware extends MiddlewarePipeline implements Middleware
      */
     public function process( Request $request, Response $response, callable $next ): Response
     {
+        // the "after" request
         $next = $next($request, $response);
+
+        // middleware actions
+
         $flash = $request->getSession()->flash();
         if ( $next->getStatusCode() < 300)
         {
             $flash->clearAll();
         }
-        
+
         return $next;
     }
 

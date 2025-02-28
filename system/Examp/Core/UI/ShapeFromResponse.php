@@ -3,7 +3,8 @@
 namespace Examp\Core\UI;
 
 /**
- * Description of FormResponseFromatter
+ * Description of ShapeFromResponse
+ * It's style formatting the response message to a form
  */
 class ShapeFromResponse
 {
@@ -47,7 +48,7 @@ class ShapeFromResponse
     protected function storeMessageToShape($responseTextData): array
     {
         $messageStock = [];
-        
+
         if (!empty($responseTextData))
         {
             if ( !is_array($responseTextData))
